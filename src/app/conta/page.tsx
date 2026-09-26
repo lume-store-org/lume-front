@@ -2,62 +2,62 @@
 
 import { useEffect, useState } from 'react'
 import { KeyRound, UserRound } from 'lucide-react'
-import { api, enviar } from '@/lib/api'
-import type { Usuario } from '@/lib/types'
+import { api, send } from '@/lib/api'
+import type { User } from '@/lib/types'
 import { useAuth } from '@/lib/store'
 import { RequireAuth } from '@/components/RequireAuth'
-import { avisar } from '@/components/Toaster'
+import { notify } from '@/components/Toaster'
 
-function Conta() {
-  const atualizarUsuario = useAuth((s) => s.atualizarUsuario)
-  const [perfil, setPerfil] = useState({ nome: '', email: '', endereco: '', telefone: '' })
-  const [senhas, setSenhas] = useState({ senha_atual: '', nova_senha: '' })
+function Account() {
+  const updateUser = useAuth((s) => s.updateUser)
+  const [profile, setProfile] = useState({ name: '', email: '', address: '', phone: '' })
+  const [passwords, setPasswords] = useState({ current_password: '', new_password: '' })
 
   useEffect(() => {
-    api<Usuario>('/usuarios/me').then((u) => setPerfil({ nome: u.nome, email: u.email, endereco: u.endereco || '', telefone: u.telefone || '' }))
+    api<User>('/users/me').then((u) => setProfile({ name: u.name, email: u.email, address: u.address || '', phone: u.phone || '' }))
   }, [])
 
-  const salvar = async (e: React.FormEvent) => {
+  const save = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      atualizarUsuario(await api<Usuario>('/usuarios/me', enviar('PUT', perfil)))
-      avisar('Dados atualizados')
+      updateUser(await api<User>('/users/me', send('PUT', profile)))
+      notify('Dados atualizados')
     } catch (err) {
-      avisar((err as Error).message, 'erro')
+      notify((err as Error).message, 'error')
     }
   }
 
-  const trocarSenha = async (e: React.FormEvent) => {
+  const changePassword = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await api('/usuarios/me/senha', enviar('PATCH', senhas))
-      setSenhas({ senha_atual: '', nova_senha: '' })
-      avisar('Senha alterada')
+      await api('/users/me/password', send('PATCH', passwords))
+      setPasswords({ current_password: '', new_password: '' })
+      notify('Senha alterada')
     } catch (err) {
-      avisar((err as Error).message, 'erro')
+      notify((err as Error).message, 'error')
     }
   }
 
-  const campo = (k: keyof typeof perfil) => ({ value: perfil[k], onChange: (e: React.ChangeEvent<HTMLInputElement>) => setPerfil({ ...perfil, [k]: e.target.value }) })
+  const field = (k: keyof typeof profile) => ({ value: profile[k], onChange: (e: React.ChangeEvent<HTMLInputElement>) => setProfile({ ...profile, [k]: e.target.value }) })
 
   return (
-    <div className="container-loja max-w-3xl py-10">
+    <div className="container-store max-w-3xl py-10">
       <h1 className="text-3xl font-semibold tracking-tight">Minha conta</h1>
-      <form onSubmit={salvar} className="card mt-8 space-y-4 p-6">
-        <h2 className="flex items-center gap-2 text-lg font-bold"><UserRound className="h-5 w-5 text-brand-600" /> Dados pessoais</h2>
+      <form onSubmit={save} className="card mt-8 space-y-4 p-6">
+        <h2 className="flex items-center gap-2 text-lg font-semibold"><UserRound className="h-5 w-5" /> Dados pessoais</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div><label className="label">Nome</label><input className="input" {...campo('nome')} /></div>
-          <div><label className="label">E-mail</label><input type="email" className="input" {...campo('email')} /></div>
-          <div><label className="label">Telefone</label><input className="input" {...campo('telefone')} /></div>
-          <div className="sm:col-span-2"><label className="label">Endereço</label><input className="input" {...campo('endereco')} /></div>
+          <div><label className="label">Nome</label><input className="input" {...field('name')} /></div>
+          <div><label className="label">E-mail</label><input type="email" className="input" {...field('email')} /></div>
+          <div><label className="label">Telefone</label><input className="input" {...field('phone')} /></div>
+          <div className="sm:col-span-2"><label className="label">Endereço</label><input className="input" {...field('address')} /></div>
         </div>
         <button className="btn-primary">Salvar alterações</button>
       </form>
-      <form onSubmit={trocarSenha} className="card mt-6 space-y-4 p-6">
-        <h2 className="flex items-center gap-2 text-lg font-bold"><KeyRound className="h-5 w-5 text-brand-600" /> Trocar senha</h2>
+      <form onSubmit={changePassword} className="card mt-6 space-y-4 p-6">
+        <h2 className="flex items-center gap-2 text-lg font-semibold"><KeyRound className="h-5 w-5" /> Trocar senha</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div><label className="label">Senha atual</label><input required type="password" className="input" value={senhas.senha_atual} onChange={(e) => setSenhas({ ...senhas, senha_atual: e.target.value })} /></div>
-          <div><label className="label">Nova senha</label><input required type="password" minLength={6} className="input" value={senhas.nova_senha} onChange={(e) => setSenhas({ ...senhas, nova_senha: e.target.value })} /></div>
+          <div><label className="label">Senha atual</label><input required type="password" className="input" value={passwords.current_password} onChange={(e) => setPasswords({ ...passwords, current_password: e.target.value })} /></div>
+          <div><label className="label">Nova senha</label><input required type="password" minLength={6} className="input" value={passwords.new_password} onChange={(e) => setPasswords({ ...passwords, new_password: e.target.value })} /></div>
         </div>
         <button className="btn-outline">Alterar senha</button>
       </form>
@@ -68,7 +68,7 @@ function Conta() {
 export default function Page() {
   return (
     <RequireAuth>
-      <Conta />
+      <Account />
     </RequireAuth>
   )
 }

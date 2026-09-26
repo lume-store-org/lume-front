@@ -2,43 +2,43 @@
 
 import { useEffect, useState } from 'react'
 import { Package } from 'lucide-react'
-import { api, enviar } from '@/lib/api'
-import type { Pedido } from '@/lib/types'
+import { api, send } from '@/lib/api'
+import type { Order } from '@/lib/types'
 import { RequireAuth } from '@/components/RequireAuth'
-import { PedidoCard } from '@/components/PedidoCard'
-import { Empty } from '@/components/Empty'
-import { avisar } from '@/components/Toaster'
+import { OrderCard } from '@/components/OrderCard'
+import { EmptyState } from '@/components/EmptyState'
+import { notify } from '@/components/Toaster'
 
-function MeusPedidos() {
-  const [pedidos, setPedidos] = useState<Pedido[] | null>(null)
-  const carregar = () => api<{ pedidos: Pedido[] }>('/pedidos').then((r) => setPedidos(r.pedidos)).catch(() => setPedidos([]))
+function MyOrders() {
+  const [orders, setOrders] = useState<Order[] | null>(null)
+  const load = () => api<{ orders: Order[] }>('/orders').then((r) => setOrders(r.orders)).catch(() => setOrders([]))
   useEffect(() => {
-    carregar()
+    load()
   }, [])
 
-  const cancelar = async (id: number) => {
+  const cancel = async (id: number) => {
     try {
-      await api(`/pedidos/${id}`, enviar('DELETE'))
-      avisar(`Pedido #${id} cancelado`)
-      carregar()
+      await api(`/orders/${id}`, send('DELETE'))
+      notify(`Pedido #${id} cancelado`)
+      load()
     } catch (err) {
-      avisar((err as Error).message, 'erro')
+      notify((err as Error).message, 'error')
     }
   }
 
   return (
-    <div className="container-loja max-w-4xl py-10">
+    <div className="container-store max-w-4xl py-10">
       <h1 className="text-3xl font-semibold tracking-tight">Meus pedidos</h1>
       <div className="mt-8 space-y-4">
-        {pedidos === null && <div className="h-40 animate-pulse rounded-2xl bg-gray-200" />}
-        {pedidos?.length === 0 && <Empty icon={Package} titulo="Nenhum pedido ainda" texto="Quando você comprar algo, ele aparece aqui." acao={{ href: '/produtos', label: 'Ver produtos' }} />}
-        {pedidos?.map((p) => (
-          <PedidoCard
-            key={p.id}
-            pedido={p}
-            acoes={
-              ['pendente', 'pago'].includes(p.status) && (
-                <button onClick={() => cancelar(p.id)} className="btn-outline shrink-0 text-rose-600 hover:border-rose-300 hover:bg-rose-50">
+        {orders === null && <div className="h-40 animate-pulse rounded-2xl bg-gray-200" />}
+        {orders?.length === 0 && <EmptyState icon={Package} title="Nenhum pedido ainda" text="Quando você comprar algo, ele aparece aqui." action={{ href: '/produtos', label: 'Ver produtos' }} />}
+        {orders?.map((o) => (
+          <OrderCard
+            key={o.id}
+            order={o}
+            actions={
+              ['pending', 'paid'].includes(o.status) && (
+                <button onClick={() => cancel(o.id)} className="btn-outline shrink-0 text-rose-600 hover:border-rose-300 hover:bg-rose-50">
                   Cancelar pedido
                 </button>
               )
@@ -53,7 +53,7 @@ function MeusPedidos() {
 export default function Page() {
   return (
     <RequireAuth>
-      <MeusPedidos />
+      <MyOrders />
     </RequireAuth>
   )
 }
