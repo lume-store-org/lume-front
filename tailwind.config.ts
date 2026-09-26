@@ -15,7 +15,7 @@ export default {
         },
         ink: '#0F172A',
       },
-      fontFamily: { sans: ['var(--font-sans)', 'system-ui', 'sans-serif'] },
+      fontFamily: { sans: ['"Inter Variable"', 'system-ui', 'sans-serif'] },
       boxShadow: { card: '0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.18)' },
     },
   },

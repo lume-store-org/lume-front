@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import '@fontsource-variable/inter'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Toaster } from '@/components/Toaster'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
   title: 'Lab Store · E-commerce com microserviços',
@@ -14,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={inter.variable}>
+    <html lang="pt-BR">
       <body className="flex min-h-screen flex-col">
         <Header />
         <main className="flex-1">{children}</main>
