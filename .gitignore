@@ -1,0 +1,15 @@
+# Dependencies and build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# System / editors
+.DS_Store
+.vscode/
+.idea/
