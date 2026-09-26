@@ -6,8 +6,8 @@ import { Footer } from '@/components/Footer'
 import { Toaster } from '@/components/Toaster'
 
 export const metadata: Metadata = {
-  title: 'Lab Store · E-commerce com microserviços',
-  description: 'Loja de demonstração: API Gateway, serviços de itens, pedidos e usuários, cada um com seu banco.',
+  title: 'Lume Store · Tecnologia e estilo',
+  description: 'Smartphones, notebooks, áudio, acessórios e moda com estoque em tempo real.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

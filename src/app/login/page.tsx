@@ -48,9 +48,9 @@ function Login() {
         <button disabled={enviando} className="btn-primary w-full py-3">{enviando ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Entrar'}</button>
       </form>
       <div className="mt-6 rounded-xl bg-slate-100 p-4 text-xs text-slate-600">
-        <p className="font-semibold text-slate-700">Contas de demonstração</p>
-        <p className="mt-1">Cliente: cliente@loja.dev · senha123</p>
-        <p>Admin: admin@loja.dev · admin123</p>
+        <p className="font-semibold text-slate-700">Contas de teste</p>
+        <p className="mt-1">Cliente: cliente@lumestore.dev · senha123</p>
+        <p>Admin: admin@lumestore.dev · admin123</p>
       </div>
     </AuthCard>
   )

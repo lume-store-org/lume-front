@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { LayoutDashboard, LogOut, Package, Search, ShoppingBag, Store, User } from 'lucide-react'
+import { LayoutDashboard, LogOut, Package, Search, ShoppingBag, Sparkles, User } from 'lucide-react'
 import { useAuth, useCart, qtdCarrinho } from '@/lib/store'
 import { useHydrated } from '@/lib/hooks'
 import { api, enviar } from '@/lib/api'
@@ -35,10 +35,10 @@ export function Header() {
       <div className="container-loja flex h-16 items-center gap-6">
         <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-            <Store className="h-5 w-5" />
+            <Sparkles className="h-5 w-5" />
           </span>
           <span>
-            Lab<span className="text-brand-600">Store</span>
+            Lume<span className="text-brand-600">Store</span>
           </span>
         </Link>
 
