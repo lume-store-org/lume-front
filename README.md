@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="docs/logo.svg" alt="Lume Store" width="240" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.svg" />
+    <img src="docs/logo.svg" alt="Lume Store" width="240" />
+  </picture>
 </p>
 
 <h1 align="center">
@@ -25,7 +28,7 @@ O front conversa só com o [lume-gateway](https://github.com/lume-store-org/lume
 ## Arquitetura
 
 <p align="center">
-  <img src="docs/arch.gif" alt="Arquitetura da Lume Store" />
+  <img src="docs/arch.gif" alt="Arquitetura do lume-front: o navegador carrega a loja e chama o gateway" />
 </p>
 
 ## O que foi construído
