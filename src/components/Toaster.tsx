@@ -3,31 +3,28 @@
 import { create } from 'zustand'
 import { CheckCircle2, XCircle } from 'lucide-react'
 
-interface Aviso {
+interface Toast {
   id: number
-  texto: string
-  tipo: 'ok' | 'erro'
+  text: string
+  kind: 'ok' | 'error'
 }
 
-const useAvisos = create<{ avisos: Aviso[] }>(() => ({ avisos: [] }))
+const useToasts = create<{ toasts: Toast[] }>(() => ({ toasts: [] }))
 
-export function avisar(texto: string, tipo: Aviso['tipo'] = 'ok') {
+export function notify(text: string, kind: Toast['kind'] = 'ok') {
   const id = Date.now() + Math.random()
-  useAvisos.setState((s) => ({ avisos: [...s.avisos, { id, texto, tipo }] }))
-  setTimeout(() => useAvisos.setState((s) => ({ avisos: s.avisos.filter((a) => a.id !== id) })), 3200)
+  useToasts.setState((s) => ({ toasts: [...s.toasts, { id, text, kind }] }))
+  setTimeout(() => useToasts.setState((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })), 3200)
 }
 
 export function Toaster() {
-  const avisos = useAvisos((s) => s.avisos)
+  const toasts = useToasts((s) => s.toasts)
   return (
     <div className="pointer-events-none fixed bottom-6 right-6 z-50 flex flex-col gap-2">
-      {avisos.map((a) => (
-        <div
-          key={a.id}
-          className="pointer-events-auto flex items-center gap-3 rounded-xl bg-ink px-4 py-3 text-sm font-medium text-white shadow-lg"
-        >
-          {a.tipo === 'ok' ? <CheckCircle2 className="h-5 w-5 text-emerald-400" /> : <XCircle className="h-5 w-5 text-rose-400" />}
-          {a.texto}
+      {toasts.map((t) => (
+        <div key={t.id} className="pointer-events-auto flex items-center gap-3 rounded-xl bg-ink px-4 py-3 text-sm font-medium text-white shadow-lg">
+          {t.kind === 'ok' ? <CheckCircle2 className="h-5 w-5 text-brand-500" /> : <XCircle className="h-5 w-5 text-rose-400" />}
+          {t.text}
         </div>
       ))}
     </div>
