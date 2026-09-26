@@ -25,9 +25,9 @@ export default function Carrinho() {
 
   return (
     <div className="container-loja py-10">
-      <h1 className="text-3xl font-bold tracking-tight">Carrinho</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Carrinho</h1>
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_360px]">
-        <div className="card divide-y divide-slate-100">
+        <div className="card divide-y divide-gray-100">
           {linhas.map((l) => (
             <div key={l.id} className="flex gap-4 p-4 sm:p-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -37,14 +37,14 @@ export default function Carrinho() {
                   <Link href={`/produtos/${l.id}`} className="font-semibold hover:text-brand-600">{l.nome}</Link>
                   <p className="font-bold">{brl(l.preco * l.quantidade)}</p>
                 </div>
-                <p className="text-sm text-slate-500">{brl(l.preco)} cada</p>
+                <p className="text-sm text-gray-500">{brl(l.preco)} cada</p>
                 <div className="mt-auto flex items-center justify-between pt-3">
-                  <div className="flex items-center rounded-lg border border-slate-300">
-                    <button onClick={() => alterar(l.id, l.quantidade - 1)} className="p-2 text-slate-600 hover:text-ink"><Minus className="h-3.5 w-3.5" /></button>
+                  <div className="flex items-center rounded-lg border border-gray-300">
+                    <button onClick={() => alterar(l.id, l.quantidade - 1)} className="p-2 text-gray-600 hover:text-ink"><Minus className="h-3.5 w-3.5" /></button>
                     <span className="w-8 text-center text-sm font-semibold">{l.quantidade}</span>
-                    <button onClick={() => alterar(l.id, l.quantidade + 1)} className="p-2 text-slate-600 hover:text-ink"><Plus className="h-3.5 w-3.5" /></button>
+                    <button onClick={() => alterar(l.id, l.quantidade + 1)} className="p-2 text-gray-600 hover:text-ink"><Plus className="h-3.5 w-3.5" /></button>
                   </div>
-                  <button onClick={() => remover(l.id)} className="flex items-center gap-1 text-sm text-slate-500 hover:text-rose-600">
+                  <button onClick={() => remover(l.id)} className="flex items-center gap-1 text-sm text-gray-500 hover:text-rose-600">
                     <Trash2 className="h-4 w-4" /> Remover
                   </button>
                 </div>

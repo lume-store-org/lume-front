@@ -50,8 +50,8 @@ function Catalogo() {
     <div className="container-loja py-10">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{categoria || 'Todos os produtos'}</h1>
-          <p className="mt-1 text-slate-500">
+          <h1 className="text-3xl font-semibold tracking-tight">{categoria || 'Todos os produtos'}</h1>
+          <p className="mt-1 text-gray-500">
             {lista ? `${lista.length} produto${lista.length === 1 ? '' : 's'}` : 'Carregando…'}
             {busca && <> para “{busca}”</>}
           </p>
@@ -63,7 +63,7 @@ function Catalogo() {
           }}
           className="relative w-full sm:w-80"
         >
-          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Buscar no catálogo" className="input pl-10" />
         </form>
       </div>
@@ -74,7 +74,7 @@ function Catalogo() {
             key={c.nome || 'todas'}
             onClick={() => navegar({ categoria: c.nome })}
             className={`rounded-full px-4 py-2 text-sm font-medium ring-1 transition ${
-              categoria === c.nome ? 'bg-ink text-white ring-ink' : 'bg-white text-slate-600 ring-slate-200 hover:ring-slate-300'
+              categoria === c.nome ? 'bg-ink text-white ring-ink' : 'bg-white text-gray-600 ring-gray-200 hover:ring-gray-300'
             }`}
           >
             {c.nome || 'Todas'}

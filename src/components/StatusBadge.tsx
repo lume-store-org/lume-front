@@ -5,7 +5,7 @@ const ESTILO: Record<StatusPedido, string> = {
   pago: 'bg-sky-50 text-sky-700 ring-sky-200',
   enviado: 'bg-violet-50 text-violet-700 ring-violet-200',
   entregue: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-  cancelado: 'bg-slate-100 text-slate-500 ring-slate-200',
+  cancelado: 'bg-gray-100 text-gray-500 ring-gray-200',
 }
 
 export function StatusBadge({ status }: { status: StatusPedido }) {

@@ -8,7 +8,7 @@ export function Empty({ icon: Icon, titulo, texto, acao }: { icon: LucideIcon; t
         <Icon className="h-7 w-7" />
       </span>
       <h2 className="mt-4 text-lg font-bold">{titulo}</h2>
-      <p className="mt-1 max-w-sm text-sm text-slate-500">{texto}</p>
+      <p className="mt-1 max-w-sm text-sm text-gray-500">{texto}</p>
       {acao && (
         <Link href={acao.href} className="btn-primary mt-6">
           {acao.label}

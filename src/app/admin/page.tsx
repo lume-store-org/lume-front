@@ -81,21 +81,21 @@ function Painel() {
 
   return (
     <div className="container-loja py-10">
-      <h1 className="text-3xl font-bold tracking-tight">Painel da loja</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Painel da loja</h1>
 
       <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {indicadores.map(({ icon: Icon, label, valor }) => (
           <div key={label} className="card p-5">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600"><Icon className="h-5 w-5" /></span>
-            <p className="mt-4 text-2xl font-extrabold">{valor}</p>
-            <p className="text-sm text-slate-500">{label}</p>
+            <p className="mt-4 text-2xl font-semibold">{valor}</p>
+            <p className="text-sm text-gray-500">{label}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-10 flex items-center gap-2 border-b border-slate-200">
+      <div className="mt-10 flex items-center gap-2 border-b border-gray-200">
         {(['produtos', 'pedidos'] as const).map((a) => (
-          <button key={a} onClick={() => setAba(a)} className={`-mb-px border-b-2 px-4 py-3 text-sm font-semibold capitalize ${aba === a ? 'border-brand-600 text-brand-600' : 'border-transparent text-slate-500 hover:text-ink'}`}>
+          <button key={a} onClick={() => setAba(a)} className={`-mb-px border-b-2 px-4 py-3 text-sm font-semibold capitalize ${aba === a ? 'border-brand-600 text-brand-600' : 'border-transparent text-gray-500 hover:text-ink'}`}>
             {a}
           </button>
         ))}
@@ -107,12 +107,12 @@ function Painel() {
       {aba === 'produtos' ? (
         <div className="card mt-6 overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="border-b border-gray-100 text-xs uppercase tracking-wide text-gray-500">
               <tr><th className="px-5 py-3">Produto</th><th className="px-5 py-3">Categoria</th><th className="px-5 py-3">Preço</th><th className="px-5 py-3">Estoque</th><th className="px-5 py-3" /></tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-gray-100">
               {itens.map((i) => (
-                <tr key={i.id} className="hover:bg-slate-50/60">
+                <tr key={i.id} className="hover:bg-gray-50/60">
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-3">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -121,7 +121,7 @@ function Painel() {
                       {i.destaque && <span className="rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-semibold text-brand-700">destaque</span>}
                     </div>
                   </td>
-                  <td className="px-5 py-3 text-slate-600">{i.categoria}</td>
+                  <td className="px-5 py-3 text-gray-600">{i.categoria}</td>
                   <td className="px-5 py-3 font-semibold">{brl(i.preco)}</td>
                   <td className={`px-5 py-3 font-semibold ${i.estoque <= 10 ? 'text-amber-600' : ''}`}>{i.estoque}</td>
                   <td className="px-5 py-3">
@@ -138,21 +138,21 @@ function Painel() {
       ) : (
         <div className="card mt-6 overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="border-b border-gray-100 text-xs uppercase tracking-wide text-gray-500">
               <tr><th className="px-5 py-3">Pedido</th><th className="px-5 py-3">Data</th><th className="px-5 py-3">Cliente</th><th className="px-5 py-3">Itens</th><th className="px-5 py-3">Total</th><th className="px-5 py-3">Status</th></tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-gray-100">
               {pedidos.map((p) => (
                 <tr key={p.id}>
                   <td className="px-5 py-3 font-bold">#{p.id}</td>
-                  <td className="px-5 py-3 text-slate-600">{dataHora(p.data)}</td>
-                  <td className="px-5 py-3 text-slate-600">{clientes[p.usuario_id] ?? `usuário ${p.usuario_id}`}</td>
-                  <td className="px-5 py-3 text-slate-600">{p.itens.reduce((t, i) => t + i.quantidade, 0)}</td>
+                  <td className="px-5 py-3 text-gray-600">{dataHora(p.data)}</td>
+                  <td className="px-5 py-3 text-gray-600">{clientes[p.usuario_id] ?? `usuário ${p.usuario_id}`}</td>
+                  <td className="px-5 py-3 text-gray-600">{p.itens.reduce((t, i) => t + i.quantidade, 0)}</td>
                   <td className="px-5 py-3 font-semibold">{brl(p.valor_total)}</td>
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-2">
                       <StatusBadge status={p.status} />
-                      <select value={p.status} onChange={(e) => mudarStatus(p, e.target.value as StatusPedido)} className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs">
+                      <select value={p.status} onChange={(e) => mudarStatus(p, e.target.value as StatusPedido)} className="rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs">
                         {STATUS.map((s) => <option key={s} value={s}>{s}</option>)}
                       </select>
                     </div>

@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "5.1.0",
+    "@fontsource-variable/outfit": "5.1.0",
     "lucide-react": "0.453.0",
     "next": "14.2.15",
     "react": "18.3.1",

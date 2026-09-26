@@ -42,7 +42,7 @@ function Conta() {
 
   return (
     <div className="container-loja max-w-3xl py-10">
-      <h1 className="text-3xl font-bold tracking-tight">Minha conta</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Minha conta</h1>
       <form onSubmit={salvar} className="card mt-8 space-y-4 p-6">
         <h2 className="flex items-center gap-2 text-lg font-bold"><UserRound className="h-5 w-5 text-brand-600" /> Dados pessoais</h2>
         <div className="grid gap-4 sm:grid-cols-2">

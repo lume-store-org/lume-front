@@ -28,9 +28,9 @@ function MeusPedidos() {
 
   return (
     <div className="container-loja max-w-4xl py-10">
-      <h1 className="text-3xl font-bold tracking-tight">Meus pedidos</h1>
+      <h1 className="text-3xl font-semibold tracking-tight">Meus pedidos</h1>
       <div className="mt-8 space-y-4">
-        {pedidos === null && <div className="h-40 animate-pulse rounded-2xl bg-slate-200" />}
+        {pedidos === null && <div className="h-40 animate-pulse rounded-2xl bg-gray-200" />}
         {pedidos?.length === 0 && <Empty icon={Package} titulo="Nenhum pedido ainda" texto="Quando você comprar algo, ele aparece aqui." acao={{ href: '/produtos', label: 'Ver produtos' }} />}
         {pedidos?.map((p) => (
           <PedidoCard

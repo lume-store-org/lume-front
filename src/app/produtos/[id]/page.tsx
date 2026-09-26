@@ -28,7 +28,7 @@ export default function Produto() {
         <Empty icon={PackageX} titulo="Produto não encontrado" texto="Ele pode ter saído do catálogo." acao={{ href: '/produtos', label: 'Ver produtos' }} />
       </div>
     )
-  if (!item) return <div className="container-loja py-16"><div className="h-96 animate-pulse rounded-3xl bg-slate-200" /></div>
+  if (!item) return <div className="container-loja py-16"><div className="h-96 animate-pulse rounded-3xl bg-gray-200" /></div>
 
   const esgotado = item.estoque <= 0
   const comprar = (irParaCarrinho: boolean) => {
@@ -39,7 +39,7 @@ export default function Produto() {
 
   return (
     <div className="container-loja py-10">
-      <Link href="/produtos" className="inline-flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-ink">
+      <Link href="/produtos" className="inline-flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-ink">
         <ChevronLeft className="h-4 w-4" /> Voltar ao catálogo
       </Link>
 
@@ -53,12 +53,12 @@ export default function Produto() {
           <Link href={`/produtos?categoria=${encodeURIComponent(item.categoria || '')}`} className="text-sm font-semibold uppercase tracking-wide text-brand-600">
             {item.categoria}
           </Link>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">{item.nome}</h1>
-          <p className="mt-4 text-lg leading-relaxed text-slate-600">{item.descricao}</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{item.nome}</h1>
+          <p className="mt-4 text-lg leading-relaxed text-gray-600">{item.descricao}</p>
 
           <div className="mt-8">
-            <p className="text-4xl font-extrabold">{brl(item.preco)}</p>
-            <p className="mt-1 text-slate-500">{parcelas(item.preco)}</p>
+            <p className="text-4xl font-semibold">{brl(item.preco)}</p>
+            <p className="mt-1 text-gray-500">{parcelas(item.preco)}</p>
           </div>
 
           <p className={`mt-4 text-sm font-medium ${esgotado ? 'text-rose-600' : item.estoque <= 10 ? 'text-amber-600' : 'text-emerald-600'}`}>
@@ -66,12 +66,12 @@ export default function Produto() {
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <div className="flex items-center rounded-xl border border-slate-300 bg-white">
-              <button onClick={() => setQtd((q) => Math.max(1, q - 1))} className="p-3 text-slate-600 hover:text-ink" disabled={esgotado}>
+            <div className="flex items-center rounded-xl border border-gray-300 bg-white">
+              <button onClick={() => setQtd((q) => Math.max(1, q - 1))} className="p-3 text-gray-600 hover:text-ink" disabled={esgotado}>
                 <Minus className="h-4 w-4" />
               </button>
               <span className="w-10 text-center font-semibold">{qtd}</span>
-              <button onClick={() => setQtd((q) => Math.min(item.estoque, q + 1))} className="p-3 text-slate-600 hover:text-ink" disabled={esgotado}>
+              <button onClick={() => setQtd((q) => Math.min(item.estoque, q + 1))} className="p-3 text-gray-600 hover:text-ink" disabled={esgotado}>
                 <Plus className="h-4 w-4" />
               </button>
             </div>
@@ -83,7 +83,7 @@ export default function Produto() {
             </button>
           </div>
 
-          <div className="mt-8 space-y-3 rounded-2xl bg-slate-100 p-5 text-sm text-slate-600">
+          <div className="mt-8 space-y-3 rounded-2xl bg-gray-100 p-5 text-sm text-gray-600">
             <p className="flex items-center gap-3"><Truck className="h-5 w-5 text-brand-600" /> Frete grátis em compras acima de R$ 299</p>
             <p className="flex items-center gap-3"><ShieldCheck className="h-5 w-5 text-brand-600" /> O preço é confirmado pelo servidor no fechamento do pedido</p>
           </div>
