@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 
-/** true depois da primeira renderização no navegador (evita divergência com o localStorage) */
+/** true after the first render in the browser (avoids mismatches with localStorage) */
 export function useHydrated() {
-  const [pronto, setPronto] = useState(false)
-  useEffect(() => setPronto(true), [])
-  return pronto
+  const [ready, setReady] = useState(false)
+  useEffect(() => setReady(true), [])
+  return ready
 }

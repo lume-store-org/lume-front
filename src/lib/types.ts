@@ -1,45 +1,45 @@
-export interface Item {
+export interface Product {
   id: number
-  nome: string
-  descricao: string | null
-  preco: number
-  estoque: number
-  categoria: string | null
-  imagem: string | null
-  destaque: boolean
+  name: string
+  description: string | null
+  price: number
+  stock: number
+  category: string | null
+  image: string | null
+  featured: boolean
 }
 
-export interface Categoria {
-  nome: string
+export interface Category {
+  name: string
   total: number
 }
 
-export interface Usuario {
+export interface User {
   id: number
-  nome: string
+  name: string
   email: string
-  endereco?: string | null
-  telefone?: string | null
+  address?: string | null
+  phone?: string | null
   is_admin: boolean
-  data_cadastro?: string
+  created_at?: string
 }
 
-export type StatusPedido = 'pendente' | 'pago' | 'enviado' | 'entregue' | 'cancelado'
+export type OrderStatus = 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled'
 
-export interface ItemPedido {
-  item_id: number
-  nome: string
-  imagem: string | null
-  quantidade: number
-  preco_unitario: number
+export interface OrderItem {
+  product_id: number
+  name: string
+  image: string | null
+  quantity: number
+  unit_price: number
 }
 
-export interface Pedido {
+export interface Order {
   id: number
-  usuario_id: number
-  data: string
-  status: StatusPedido
-  endereco_entrega: string | null
-  valor_total: number
-  itens: ItemPedido[]
+  user_id: number
+  created_at: string
+  status: OrderStatus
+  shipping_address: string | null
+  total: number
+  items: OrderItem[]
 }

@@ -2,73 +2,73 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Item, Usuario } from './types'
+import type { Product, User } from './types'
 
 interface AuthState {
   token: string | null
-  usuario: Usuario | null
-  entrar: (token: string, usuario: Usuario) => void
-  atualizarUsuario: (usuario: Usuario) => void
-  sair: () => void
+  user: User | null
+  signIn: (token: string, user: User) => void
+  updateUser: (user: User) => void
+  signOut: () => void
 }
 
 export const useAuth = create<AuthState>()(
   persist(
     (set) => ({
       token: null,
-      usuario: null,
-      entrar: (token, usuario) => set({ token, usuario }),
-      atualizarUsuario: (usuario) => set({ usuario }),
-      sair: () => set({ token: null, usuario: null }),
+      user: null,
+      signIn: (token, user) => set({ token, user }),
+      updateUser: (user) => set({ user }),
+      signOut: () => set({ token: null, user: null }),
     }),
-    { name: 'loja-auth' },
+    { name: 'lume-auth' },
   ),
 )
 
-export interface LinhaCarrinho {
+export interface CartLine {
   id: number
-  nome: string
-  preco: number
-  imagem: string | null
-  estoque: number
-  quantidade: number
+  name: string
+  price: number
+  image: string | null
+  stock: number
+  quantity: number
 }
 
 interface CartState {
-  linhas: LinhaCarrinho[]
-  adicionar: (item: Item, quantidade?: number) => void
-  alterar: (id: number, quantidade: number) => void
-  remover: (id: number) => void
-  limpar: () => void
+  lines: CartLine[]
+  add: (product: Product, quantity?: number) => void
+  setQuantity: (id: number, quantity: number) => void
+  remove: (id: number) => void
+  clear: () => void
 }
 
 export const useCart = create<CartState>()(
   persist(
     (set) => ({
-      linhas: [],
-      adicionar: (item, quantidade = 1) =>
+      lines: [],
+      add: (product, quantity = 1) =>
         set((s) => {
-          const atual = s.linhas.find((l) => l.id === item.id)
-          if (atual) {
+          const existing = s.lines.find((l) => l.id === product.id)
+          if (existing) {
             return {
-              linhas: s.linhas.map((l) =>
-                l.id === item.id ? { ...l, quantidade: Math.min(l.quantidade + quantidade, item.estoque) } : l,
+              lines: s.lines.map((l) =>
+                l.id === product.id ? { ...l, quantity: Math.min(l.quantity + quantity, product.stock) } : l,
               ),
             }
           }
-          const { id, nome, preco, imagem, estoque } = item
-          return { linhas: [...s.linhas, { id, nome, preco, imagem, estoque, quantidade: Math.min(quantidade, estoque) }] }
+          const { id, name, price, image, stock } = product
+          return { lines: [...s.lines, { id, name, price, image, stock, quantity: Math.min(quantity, stock) }] }
         }),
-      alterar: (id, quantidade) =>
+      setQuantity: (id, quantity) =>
         set((s) => ({
-          linhas: s.linhas.map((l) => (l.id === id ? { ...l, quantidade: Math.max(1, Math.min(quantidade, l.estoque)) } : l)),
+          lines: s.lines.map((l) => (l.id === id ? { ...l, quantity: Math.max(1, Math.min(quantity, l.stock)) } : l)),
         })),
-      remover: (id) => set((s) => ({ linhas: s.linhas.filter((l) => l.id !== id) })),
-      limpar: () => set({ linhas: [] }),
+      remove: (id) => set((s) => ({ lines: s.lines.filter((l) => l.id !== id) })),
+      clear: () => set({ lines: [] }),
     }),
-    { name: 'loja-carrinho' },
+    { name: 'lume-cart' },
   ),
 )
 
-export const totalCarrinho = (linhas: LinhaCarrinho[]) => linhas.reduce((t, l) => t + l.preco * l.quantidade, 0)
-export const qtdCarrinho = (linhas: LinhaCarrinho[]) => linhas.reduce((t, l) => t + l.quantidade, 0)
+export const cartTotal = (lines: CartLine[]) => lines.reduce((t, l) => t + l.price * l.quantity, 0)
+export const cartCount = (lines: CartLine[]) => lines.reduce((t, l) => t + l.quantity, 0)

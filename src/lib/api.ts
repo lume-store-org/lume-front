@@ -13,9 +13,9 @@ export class ApiError extends Error {
   }
 }
 
-export async function api<T>(caminho: string, init: RequestInit = {}): Promise<T> {
-  const { token, sair } = useAuth.getState()
-  const resp = await fetch(`${API_URL}/api${caminho}`, {
+export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const { token, signOut } = useAuth.getState()
+  const resp = await fetch(`${API_URL}/api${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
@@ -23,15 +23,15 @@ export async function api<T>(caminho: string, init: RequestInit = {}): Promise<T
       ...init.headers,
     },
   })
-  const dados = await resp.json().catch(() => ({}))
+  const data = await resp.json().catch(() => ({}))
   if (!resp.ok) {
-    if (resp.status === 401 && token) sair()
-    throw new ApiError(dados.erro || 'Não foi possível completar a ação', resp.status)
+    if (resp.status === 401 && token) signOut()
+    throw new ApiError(data.error || 'Não foi possível concluir a ação', resp.status)
   }
-  return dados as T
+  return data as T
 }
 
-export const enviar = (metodo: string, corpo?: unknown): RequestInit => ({
-  method: metodo,
-  body: corpo === undefined ? undefined : JSON.stringify(corpo),
+export const send = (method: string, body?: unknown): RequestInit => ({
+  method,
+  body: body === undefined ? undefined : JSON.stringify(body),
 })
