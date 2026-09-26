@@ -2,24 +2,18 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { ArrowRight, Headphones, Laptop, RotateCcw, ShieldCheck, Shirt, Smartphone, Truck, Watch } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { api } from '@/lib/api'
 import type { Categoria, Item } from '@/lib/types'
 import { ProductCard, ProductCardSkeleton } from '@/components/ProductCard'
 
-const ICONES: Record<string, typeof Laptop> = {
-  Eletrônicos: Smartphone,
-  Informática: Laptop,
-  Áudio: Headphones,
-  Acessórios: Watch,
-  Moda: Shirt,
+const FOTO_CATEGORIA: Record<string, string> = {
+  Eletrônicos: '/produtos/smartphone.jpg',
+  Informática: '/produtos/notebook-ultrafino.jpg',
+  Áudio: '/produtos/headphone-anc.jpg',
+  Acessórios: '/produtos/smartwatch.jpg',
+  Moda: '/produtos/tenis-corrida.jpg',
 }
-
-const VANTAGENS = [
-  { icon: Truck, titulo: 'Frete grátis', texto: 'Em compras acima de R$ 299' },
-  { icon: ShieldCheck, titulo: 'Compra segura', texto: 'Sessão protegida por token' },
-  { icon: RotateCcw, titulo: 'Cancelamento fácil', texto: 'O estoque volta na hora' },
-]
 
 export default function Home() {
   const [destaques, setDestaques] = useState<Item[] | null>(null)
@@ -32,93 +26,77 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(59,108,246,.45),transparent_55%)]" />
-        <div className="container-loja relative grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
-          <div>
-            <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-brand-100 ring-1 ring-white/20">
-              Novidades da semana
-            </span>
-            <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
-              Tecnologia e estilo <span className="text-brand-500">num só lugar</span>
+      <section className="bg-gray-100">
+        <div className="container-loja grid items-center gap-10 py-12 md:grid-cols-[1fr_1.1fr] md:py-16">
+          <div className="max-w-lg">
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-gray-500">Coleção 2026</p>
+            <h1 className="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-[3.4rem]">
+              Tecnologia que acompanha o seu ritmo.
             </h1>
-            <p className="mt-4 max-w-md text-lg text-slate-300">
-              Smartphones, notebooks, áudio e acessórios com estoque em tempo real e entrega para todo o Brasil.
+            <p className="mt-5 text-lg leading-relaxed text-gray-600">
+              Fones, smartphones, notebooks e acessórios selecionados, com estoque atualizado a cada pedido.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/produtos" className="btn-primary px-6 py-3 text-base">
-                Ver produtos <ArrowRight className="h-5 w-5" />
+            <div className="mt-8 flex flex-wrap items-center gap-6">
+              <Link href="/produtos" className="btn-primary px-7 py-3.5 text-base">
+                Comprar agora
               </Link>
-              <Link href="/cadastro" className="btn px-6 py-3 text-base text-white ring-1 ring-white/30 hover:bg-white/10">
-                Criar conta
+              <Link href="/produtos?categoria=%C3%81udio" className="group inline-flex items-center gap-1.5 text-base font-medium text-ink">
+                Ver áudio
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </Link>
             </div>
           </div>
-          <div className="relative hidden md:block">
-            <div className="grid grid-cols-2 gap-4">
-              {['/produtos/smartphone.jpg', '/produtos/fone-over-ear.jpg', '/produtos/smartwatch.jpg', '/produtos/tenis-corrida.jpg'].map((src, i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={src}
-                  src={src}
-                  alt=""
-                  className={`aspect-square w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/10 ${i % 2 ? 'translate-y-8' : ''}`}
-                />
-              ))}
+          <Link href="/produtos/7" className="group relative block overflow-hidden rounded-3xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/produtos/fone-over-ear.jpg"
+              alt="Fone over-ear Bluetooth"
+              className="aspect-[5/4] w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+            />
+            <div className="absolute bottom-5 left-5 rounded-2xl bg-white/95 px-5 py-3 shadow-sm backdrop-blur">
+              <p className="text-sm text-gray-500">Fone over-ear Bluetooth</p>
+              <p className="font-semibold text-ink">R$ 449,90 · 40 h de bateria</p>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
-      <section className="container-loja -mt-8 relative z-10">
-        <div className="card grid divide-y divide-slate-100 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          {VANTAGENS.map(({ icon: Icon, titulo, texto }) => (
-            <div key={titulo} className="flex items-center gap-4 p-5">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                <Icon className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="font-semibold">{titulo}</p>
-                <p className="text-sm text-slate-500">{texto}</p>
+      <section className="container-loja mt-16">
+        <div className="flex items-end justify-between">
+          <h2 className="text-2xl font-semibold tracking-tight">Categorias</h2>
+          <Link href="/produtos" className="text-sm font-medium text-gray-600 hover:text-ink">
+            Ver todos os produtos
+          </Link>
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {categorias.map((c) => (
+            <Link key={c.nome} href={`/produtos?categoria=${encodeURIComponent(c.nome)}`} className="group">
+              <div className="overflow-hidden rounded-2xl bg-gray-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={FOTO_CATEGORIA[c.nome] ?? '/produtos/placeholder.jpg'}
+                  alt=""
+                  className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+                />
               </div>
-            </div>
+              <p className="mt-3 font-medium text-ink">{c.nome}</p>
+              <p className="text-sm text-gray-500">{c.total} produtos</p>
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="container-loja mt-14">
-        <h2 className="text-2xl font-bold tracking-tight">Compre por categoria</h2>
-        <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-          {categorias.map((c) => {
-            const Icon = ICONES[c.nome] ?? Laptop
-            return (
-              <Link
-                key={c.nome}
-                href={`/produtos?categoria=${encodeURIComponent(c.nome)}`}
-                className="card group flex flex-col items-center gap-3 px-4 py-6 transition hover:border-brand-200 hover:shadow-lg"
-              >
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 transition group-hover:bg-brand-600 group-hover:text-white">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <span className="font-semibold">{c.nome}</span>
-                <span className="text-xs text-slate-500">{c.total} produtos</span>
-              </Link>
-            )
-          })}
-        </div>
-      </section>
-
-      <section className="container-loja mt-14">
+      <section className="container-loja mt-16">
         <div className="flex items-end justify-between">
-          <h2 className="text-2xl font-bold tracking-tight">Destaques</h2>
-          <Link href="/produtos" className="flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700">
-            Ver tudo <ArrowRight className="h-4 w-4" />
+          <h2 className="text-2xl font-semibold tracking-tight">Mais vendidos</h2>
+          <Link href="/produtos" className="text-sm font-medium text-gray-600 hover:text-ink">
+            Ver tudo
           </Link>
         </div>
-        <div className="mt-5 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
           {destaques === null
-            ? Array.from({ length: 8 }).map((_, i) => <ProductCardSkeleton key={i} />)
-            : destaques.map((item) => <ProductCard key={item.id} item={item} />)}
+            ? Array.from({ length: 4 }).map((_, i) => <ProductCardSkeleton key={i} />)
+            : destaques.slice(0, 4).map((item) => <ProductCard key={item.id} item={item} selo={false} />)}
         </div>
       </section>
     </>

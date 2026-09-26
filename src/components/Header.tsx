@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { LayoutDashboard, LogOut, Package, Search, ShoppingBag, Sparkles, User } from 'lucide-react'
+import { LayoutDashboard, LogOut, Package, Search, ShoppingBag, User } from 'lucide-react'
 import { useAuth, useCart, qtdCarrinho } from '@/lib/store'
 import { useHydrated } from '@/lib/hooks'
 import { api, enviar } from '@/lib/api'
@@ -28,18 +28,21 @@ export function Header() {
   }
 
   const link = (href: string) =>
-    `rounded-lg px-3 py-2 text-sm font-medium transition ${pathname.startsWith(href) ? 'text-brand-600' : 'text-slate-600 hover:text-ink'}`
+    `rounded-lg px-3 py-2 text-sm font-medium transition ${pathname.startsWith(href) ? 'text-ink underline decoration-brand-500 decoration-2 underline-offset-8' : 'text-gray-600 hover:text-ink'}`
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <>
+    <div className="bg-ink text-xs text-gray-300">
+      <div className="container-loja flex h-9 items-center justify-center gap-6 sm:justify-between">
+        <p>Frete grátis nas compras acima de R$ 299</p>
+        <p className="hidden sm:block">Parcele em até 10x sem juros · Troca grátis em 30 dias</p>
+      </div>
+    </div>
+    <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur">
       <div className="container-loja flex h-16 items-center gap-6">
-        <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-            <Sparkles className="h-5 w-5" />
-          </span>
-          <span>
-            Lume<span className="text-brand-600">Store</span>
-          </span>
+        <Link href="/" className="shrink-0" aria-label="Lume Store, página inicial">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/marca/logo.svg" alt="Lume Store" className="h-8 w-auto" />
         </Link>
 
         <nav className="hidden items-center md:flex">
@@ -49,12 +52,12 @@ export function Header() {
         </nav>
 
         <form onSubmit={buscar} className="relative ml-auto hidden max-w-sm flex-1 lg:block">
-          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             placeholder="Buscar produtos"
-            className="input rounded-full bg-slate-50 py-2 pl-10"
+            className="input rounded-full bg-gray-50 py-2 pl-10"
           />
         </form>
 
@@ -85,7 +88,7 @@ export function Header() {
           <Link href="/carrinho" className="btn-ghost relative px-3" title="Carrinho">
             <ShoppingBag className="h-5 w-5" />
             {pronto && qtd > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-600 px-1 text-[11px] font-bold text-white">
+              <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-500 px-1 text-[11px] font-bold text-ink">
                 {qtd}
               </span>
             )}
@@ -93,5 +96,6 @@ export function Header() {
         </div>
       </div>
     </header>
+    </>
   )
 }
